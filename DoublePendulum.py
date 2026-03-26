@@ -1,5 +1,5 @@
 import pylab
-from math import cos, sin
+from math import cos, sin, pi
 from copy import copy
 
 # Standards
@@ -35,7 +35,7 @@ def PartA(theta1, theta2, omega1, omega2, m, l, g = 9.8):
     E = V + T
     return E
 
-def f(r, m, l, g = 9.8):
+def f(r, t, l, g = 9.8):
 
     theta1 = r[0]
     theta2 = r[1]
@@ -62,11 +62,11 @@ def addi(lone, ltwo):
         retti.append(lone[i] + ltwo[i])
     return retti
 
-def rungkut(r, t, h, m, l, g):
-    kone = multi(h, f(r, t, m, l, g))
-    ktwo = multi(h, f(addi(r, multi(0.5, kone)), t + 0.5*h, m, l, g))
-    kthree = multi(h, f(addi(r, multi(0.5, ktwo)), t + 0.5*h, m, l, g))
-    kfour = multi(h, f(addi(r, kthree), t + h, m, l, g))
+def rungkut(r, t, h, l, g):
+    kone = multi(h, f(r, t, l, g))
+    ktwo = multi(h, f(addi(r, multi(0.5, kone)), t + 0.5*h, l, g))
+    kthree = multi(h, f(addi(r, multi(0.5, ktwo)), t + 0.5*h, l, g))
+    kfour = multi(h, f(addi(r, kthree), t + h, l, g))
     k = addi(r, multi((1/6), addi(addi(kone, multi(2, ktwo)), addi(multi(2, kthree), kfour))))
     return k
 
@@ -84,10 +84,94 @@ def calculate(theta1_og, theta2_og, omega1_og, omega2_og, m, l, g, tmin, tmax, h
         omega1_curr = omega1s[-1]
         omega2_curr = omega2s[-1]
         r_old = [theta1_curr, theta2_curr, omega1_curr, omega2_curr]
-        r_new = rungkut(r_old, t, h, m, l, g)
+        r_new = rungkut(r_old, t, h, l, g)
         theta1s.append(r_new[0])
         theta2s.append(r_new[1])
         omega1s.append(r_new[2])
         omega2s.append(r_new[3])
         ts.append(t)
         t += h
+    
+    return theta1s, theta2s, omega1s, omega2s, ts
+
+def totalEnergy(theta1s, theta2s, omega1s, omega2s, ts, m, l, g):
+    Es =[]
+    new_ts = []
+    for i in range(0, len(theta1s), 10):
+        Es.append(PartA(theta1s[i], theta2s[i], omega1s[i], omega2s[i], m, l, g))
+        new_ts.append(ts[i])
+    pylab.plot(new_ts, Es)
+    pylab.xlabel("Time in seconds")
+    pylab.ylabel("Total Energy of the System in Joules")
+    pylab.title("Conservation of Energy")
+    pylab.show()
+    return Es
+
+def getX1(l, theta1):
+    return l*sin(theta1)
+def getY1(l, theta1):
+    return -l*cos(theta1)
+def getX2(l, theta1, theta2):
+    return l*sin(theta1) + l*sin(theta2)
+def getY2(l, theta1, theta2):
+    return -l*cos(theta1) - l*cos(theta2)
+
+def GraphXs(theta1s, theta2s, ts, l):
+    x1s = []
+    x2s = []
+    new_ts = []
+    
+    for i in range(0, len(theta1s), 10):
+        x1s.append(getX1(l, theta1s[i]))
+        x2s.append(getX2(l, theta1s[i], theta2s[i]))
+        new_ts.append(ts[i])
+
+    pylab.plot(new_ts, x1s, label = "First Mass")
+    pylab.plot(new_ts, x2s, label = "Second Mass")
+    pylab.xlabel("Time in seconds")
+    pylab.ylabel("X-position")
+    pylab.title("X-position Over Time")
+    pylab.legend()
+    pylab.show()
+    return x1s, x2s
+
+def GraphYs(theta1s, theta2s, ts, l):
+    y1s = []
+    y2s = []
+    new_ts = []
+    
+    for i in range(0, len(theta1s), 10):
+        y1s.append(getY1(l, theta1s[i]))
+        y2s.append(getY2(l, theta1s[i], theta2s[i]))
+        new_ts.append(ts[i])
+
+    pylab.plot(new_ts, y1s, label = "First Mass")
+    pylab.plot(new_ts, y2s, label = "Second Mass")
+    pylab.xlabel("Time in seconds")
+    pylab.ylabel("Y-position")
+    pylab.title("Y-position Over Time")
+    pylab.legend()
+    pylab.show()
+    return y1s, y2s
+
+def PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l, g = 9.8):
+    theta1s, theta2s, omega1s, omega2s, ts = calculate(theta1, theta2, omega1, omega2, m, l, g, tmin, tmax, h)
+    totalEnergy(theta1s, theta2s, omega1s, omega2s, ts, m, l, g)
+    GraphXs(theta1s, theta2s, ts, l)
+    GraphYs(theta1s, theta2s, ts, l)
+
+def PartC():
+    tmin = 0
+    tmax = 100
+    h = 0.1
+    l = 0.4
+    m = 1          # NOT GIVEN
+    theta1 = pi/2
+    theta2 = pi/2
+    omega1 = 0     # NOT GIVEN
+    omega2 = 0     # NOT GIVEN
+    PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l)
+
+
+if __name__ == "__main__":
+    PartC()
