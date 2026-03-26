@@ -1,5 +1,6 @@
 import pylab
 from math import cos, sin
+from copy import copy
 
 # Standards
 # l = l1 = l2
@@ -33,3 +34,23 @@ def PartA(theta1, theta2, omega1, omega2, m, l, g = 9.8):
     T = (1/2)*m*(l**2) * (2*(omega1**2) + omega2**2 + 2*omega1*omega2*cos(theta1-theta2))
     E = V + T
     return E
+
+def multi(h, r):
+    j = copy(r)
+    for num in range(len(j)):
+        j[num] *= h
+    return j
+
+def addi(lone, ltwo):
+    retti = []
+    for i in range(len(lone)):
+        retti.append(lone[i] + ltwo[i])
+    return retti
+
+def rungkut(r, t, h, Omega):
+    kone = multi(h, f(r, t, Omega))
+    ktwo = multi(h, f(addi(r, multi(0.5, kone)), t + 0.5*h, Omega))
+    kthree = multi(h, f(addi(r, multi(0.5, ktwo)), t + 0.5*h, Omega))
+    kfour = multi(h, f(addi(r, kthree), t + h, Omega))
+    k = addi(r, multi((1/6), addi(addi(kone, multi(2, ktwo)), addi(multi(2, kthree), kfour))))
+    return k
