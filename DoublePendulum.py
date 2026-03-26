@@ -24,4 +24,6 @@ from math import cos, sin
 # T = (1/2) * m * (l**2) * (2*(dtheta1**2) + dtheta2**2 + 2*dtheta1*dtheta2*cos(theta1-theta2))
 
 # EQUATIONS OF MOTION
-# 
+# dtheta1 = omega1 dtheta2 = omega2
+# domega1 = -(omega1**2 *sin(2*theta1 - 2*theta2) + 2 *omega2**2 *sin(theta1 - theta2) + (g/l)*(sin(theta1- 2*theta2) + 3*sin(theta1)))) / (3-cos(2*theta1 - 2*theta2))
+# domega2 = (4*omega1**2 *sin(theta1 - theta2) + omega2**2 *sin(2*theta1 - 2*theta2) + (g/l)*(sin(2*theta1- theta2) - sin(theta2)))) / (3-cos(2*theta1 - 2*theta2))
