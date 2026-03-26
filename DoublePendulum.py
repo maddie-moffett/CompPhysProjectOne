@@ -28,7 +28,7 @@ from math import cos, sin
 # domega1 = -(omega1**2 *sin(2*theta1 - 2*theta2) + 2 *omega2**2 *sin(theta1 - theta2) + (g/l)*(sin(theta1- 2*theta2) + 3*sin(theta1)))) / (3-cos(2*theta1 - 2*theta2))
 # domega2 = (4*omega1**2 *sin(theta1 - theta2) + omega2**2 *sin(2*theta1 - 2*theta2) + (g/l)*(sin(2*theta1- theta2) - sin(theta2)))) / (3-cos(2*theta1 - 2*theta2))
 
-def PartA(theta1, theta2, omega1, omega2, m, g, l):
+def PartA(theta1, theta2, omega1, omega2, m, l, g = 9.8):
     V = -m*g*l*(2*cos(theta1) + cos(theta2))
     T = (1/2)*m*(l**2) * (2*(omega1**2) + omega2**2 + 2*omega1*omega2*cos(theta1-theta2))
     E = V + T
