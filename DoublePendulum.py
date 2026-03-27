@@ -94,17 +94,16 @@ def calculate(theta1_og, theta2_og, omega1_og, omega2_og, m, l, g, tmin, tmax, h
     
     return theta1s, theta2s, omega1s, omega2s, ts
 
-def totalEnergy(theta1s, theta2s, omega1s, omega2s, ts, m, l, g):
+def totalEnergy(theta1s, theta2s, omega1s, omega2s, ts, m, l, g, labelop = ""):
     Es =[]
     new_ts = []
     for i in range(0, len(theta1s), 10):
         Es.append(PartA(theta1s[i], theta2s[i], omega1s[i], omega2s[i], m, l, g))
         new_ts.append(ts[i])
-    pylab.plot(new_ts, Es)
+    pylab.plot(new_ts, Es, label = labelop)
     pylab.xlabel("Time in seconds")
     pylab.ylabel("Total Energy of the System in Joules")
     pylab.title("Conservation of Energy")
-    pylab.show()
     return Es
 
 def getX1(l, theta1):
@@ -116,7 +115,7 @@ def getX2(l, theta1, theta2):
 def getY2(l, theta1, theta2):
     return -l*cos(theta1) - l*cos(theta2)
 
-def GraphXs(theta1s, theta2s, ts, l):
+def GraphXs(theta1s, theta2s, ts, l, labelop1 = "First Mass", labelop2= "Second Mass"):
     x1s = []
     x2s = []
     new_ts = []
@@ -126,16 +125,15 @@ def GraphXs(theta1s, theta2s, ts, l):
         x2s.append(getX2(l, theta1s[i], theta2s[i]))
         new_ts.append(ts[i])
 
-    pylab.plot(new_ts, x1s, label = "First Mass")
-    pylab.plot(new_ts, x2s, label = "Second Mass")
+    pylab.plot(new_ts, x1s, label = labelop1)
+    pylab.plot(new_ts, x2s, label = labelop2)
     pylab.xlabel("Time in seconds")
     pylab.ylabel("X-position")
     pylab.title("X-position Over Time")
     pylab.legend()
-    pylab.show()
     return x1s, x2s
 
-def GraphYs(theta1s, theta2s, ts, l):
+def GraphYs(theta1s, theta2s, ts, l, labelop1 = "First Mass", labelop2= "Second Mass"):
     y1s = []
     y2s = []
     new_ts = []
@@ -145,25 +143,27 @@ def GraphYs(theta1s, theta2s, ts, l):
         y2s.append(getY2(l, theta1s[i], theta2s[i]))
         new_ts.append(ts[i])
 
-    pylab.plot(new_ts, y1s, label = "First Mass")
-    pylab.plot(new_ts, y2s, label = "Second Mass")
+    pylab.plot(new_ts, y1s, label = labelop1)
+    pylab.plot(new_ts, y2s, label = labelop2)
     pylab.xlabel("Time in seconds")
     pylab.ylabel("Y-position")
     pylab.title("Y-position Over Time")
     pylab.legend()
-    pylab.show()
     return y1s, y2s
 
 def PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l, g = 9.8):
     theta1s, theta2s, omega1s, omega2s, ts = calculate(theta1, theta2, omega1, omega2, m, l, g, tmin, tmax, h)
     totalEnergy(theta1s, theta2s, omega1s, omega2s, ts, m, l, g)
+    pylab.show()
     GraphXs(theta1s, theta2s, ts, l)
+    pylab.show()
     GraphYs(theta1s, theta2s, ts, l)
+    pylab.show()
 
 def PartC():
     tmin = 0
     tmax = 100
-    h = 0.1
+    h = 0.01
     l = 0.4
     m = 1          # NOT GIVEN
     theta1 = pi/2
@@ -171,6 +171,34 @@ def PartC():
     omega1 = 0     # NOT GIVEN
     omega2 = 0     # NOT GIVEN
     PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l)
+
+def PartDHelper(theta1, theta2, theta3, theta4, omega1, omega2, m, l, g, tmin, tmax, h):
+    thetaops = []
+    thetas = [theta1, theta2, theta3, theta4]
+    for A in range(len(thetas)):
+        for B in range(len(thetas)):
+            thetaAs, thetaBs, omega1s, omega2s, ts = calculate(thetas[A], thetas[B], omega1, omega2, m, l, g, tmin, tmax, h)
+            GraphXs(thetaAs, thetaBs, ts, l, labelop1 = "First x of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second x of " + thetaops[A] + " and " + thetaops[B])
+            GraphYs(thetaAs, thetaBs, ts, l, labelop1 = "First y of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second y of " + thetaops[A] + " and " + thetaops[B])
+        pylab.legend()
+        pylab.show()
+    
+
+def PartD():
+    tmin = 0
+    tmax = 100
+    h = 0.1
+    l = 0.4
+    m = 1          # NOT GIVEN
+    g = 9.8
+    theta1 = pi/6
+    theta2 = pi/4
+    theta3 = pi/3
+    theta4 = pi/2
+    omega1 = 0     # NOT GIVEN
+    omega2 = 0     # NOT GIVEN
+    PartDHelper(theta1, theta2, theta3, theta4, omega1, omega2, m, l, g, tmin, tmax, h)
+    
 
 
 if __name__ == "__main__":
