@@ -1,6 +1,7 @@
 import pylab
 from math import cos, sin, pi
 from copy import copy
+from matplotlib.animation import Animation as ani
 
 # Standards
 # l = l1 = l2
@@ -187,17 +188,19 @@ def PartC():
 
 def PartDHelper(theta1, theta2, theta3, theta4, theta5, omega1, omega2, m, l, g, tmin, tmax, h):
     thetaops = ["pi/6", "pi/4", "pi/3", "pi/2", "pi"]
+    location1 = "C:/Users/maddi/Desktop/CompPhys/ProjectOne/FiguresForPartD/"
+    location2ops = ["pio6", "pio4", "pio3", "pio2", "pi"]
     thetas = [theta1, theta2, theta3, theta4, theta5]
     for A in range(len(thetas)):
         for B in range(len(thetas)):
             thetaAs, thetaBs, omega1s, omega2s, ts = calculate(thetas[A], thetas[B], omega1, omega2, m, l, g, tmin, tmax, h)
             GraphXs(thetaAs, thetaBs, ts, l, labelop1 = "First x of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second x of " + thetaops[A] + " and " + thetaops[B])
             pylab.legend()
-            pylab.show()
+            pylab.save(location1 + "X" + location2ops[A] + location2ops[B])
             pylab.clf()
             GraphYs(thetaAs, thetaBs, ts, l, labelop1 = "First y of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second y of " + thetaops[A] + " and " + thetaops[B])
             pylab.legend()
-            pylab.show()
+            pylab.save(location1 + "Y" + location2ops[A] + location2ops[B])
             pylab.clf()
     
 
@@ -216,6 +219,11 @@ def PartD():
     omega1 = 0     # NOT GIVEN
     omega2 = 0     # NOT GIVEN
     PartDHelper(theta1, theta2, theta3, theta4, theta5, omega1, omega2, m, l, g, tmin, tmax, h)
+
+
+
+def animate(theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m = 1, l = 0.4, g = 9.8, tmin = 0, tmax = 100, h = 0.01):
+    theta1s, theta2s, omega1s, omega2s, ts = calculate(theta1, theta2, omega1, omega2, m, l, g, tmin, tmax, h)
     
 
 
