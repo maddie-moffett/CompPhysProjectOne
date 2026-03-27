@@ -196,18 +196,18 @@ def PartDHelper(theta1, theta2, theta3, theta4, theta5, omega1, omega2, m, l, g,
             thetaAs, thetaBs, omega1s, omega2s, ts = calculate(thetas[A], thetas[B], omega1, omega2, m, l, g, tmin, tmax, h)
             GraphXs(thetaAs, thetaBs, ts, l, labelop1 = "First x of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second x of " + thetaops[A] + " and " + thetaops[B])
             pylab.legend()
-            pylab.save(location1 + "X" + location2ops[A] + location2ops[B])
+            pylab.savefig(location1 + "X" + location2ops[A] + location2ops[B])
             pylab.clf()
             GraphYs(thetaAs, thetaBs, ts, l, labelop1 = "First y of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second y of " + thetaops[A] + " and " + thetaops[B])
             pylab.legend()
-            pylab.save(location1 + "Y" + location2ops[A] + location2ops[B])
+            pylab.savefig(location1 + "Y" + location2ops[A] + location2ops[B])
             pylab.clf()
     
 
 def PartD():
     tmin = 0
     tmax = 100
-    h = 0.01
+    h = 0.001
     l = 0.4
     m = 1          # NOT GIVEN
     g = 9.8
@@ -228,4 +228,4 @@ def animate(theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m = 1, l = 0.4
 
 
 if __name__ == "__main__":
-    PartC()
+    PartD()
