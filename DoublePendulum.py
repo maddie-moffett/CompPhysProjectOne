@@ -45,8 +45,20 @@ def f(r, l, g = 9.8):
     dtheta1 = omega1
     dtheta2 = omega2
 
-    domega1 = -(omega1**2 *sin(2*theta1 - 2*theta2) + 2 *omega2**2 *sin(theta1 - theta2) + (g/l)*(sin(theta1- 2*theta2) + 3*sin(theta1))) / (3-cos(2*theta1 - 2*theta2))
-    domega2 = (4*omega1**2 *sin(theta1 - theta2) + omega2**2 *sin(2*theta1 - 2*theta2) + (g/l)*(sin(2*theta1- theta2) - sin(theta2))) / (3-cos(2*theta1 - 2*theta2))
+    domega1topp1 = (omega1**2) * sin(2*theta1 - 2*theta2)
+    domega1topp2 = 2 * (omega2**2) * sin(theta1 - theta2)
+    domega1topp3 = (g/l) * (sin(theta1 - (2 * theta2)) + 3 * sin(theta1))
+    domega1top = domega1topp1 + domega1topp2 + domega1topp3
+    domega1bot = 3 - cos(2*theta1 - 2*theta2)
+
+    domega2topp1 = 4 * (omega1**2) * sin(theta1 - theta2)
+    domega2topp2 = (omega2**2) * sin((2 * theta1) - (2 * theta2))
+    domega2topp3 = 2 * (g/l) * (sin((2 * theta1) - theta2) - sin(theta2))
+    domega2top = domega2topp1 + domega2topp2 + domega2topp3
+    domega2bot = 3 - cos((2 * theta1) - (2 * theta2))
+
+    domega1 = -domega1top / domega1bot
+    domega2 = domega2top / domega2bot
 
     return [dtheta1, dtheta2, domega1, domega2]
 
