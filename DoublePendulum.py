@@ -185,22 +185,26 @@ def PartC():
     PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l)
     # h = 0.001 energy loss 3 * 10^(-7)
 
-def PartDHelper(theta1, theta2, theta3, theta4, omega1, omega2, m, l, g, tmin, tmax, h):
-    thetaops = []
-    thetas = [theta1, theta2, theta3, theta4]
+def PartDHelper(theta1, theta2, theta3, theta4, theta5, omega1, omega2, m, l, g, tmin, tmax, h):
+    thetaops = ["pi/6", "pi/4", "pi/3", "pi/2", "pi"]
+    thetas = [theta1, theta2, theta3, theta4, theta5]
     for A in range(len(thetas)):
         for B in range(len(thetas)):
             thetaAs, thetaBs, omega1s, omega2s, ts = calculate(thetas[A], thetas[B], omega1, omega2, m, l, g, tmin, tmax, h)
             GraphXs(thetaAs, thetaBs, ts, l, labelop1 = "First x of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second x of " + thetaops[A] + " and " + thetaops[B])
+            pylab.legend()
+            pylab.show()
+            pylab.clf()
             GraphYs(thetaAs, thetaBs, ts, l, labelop1 = "First y of " + thetaops[A] + " and " + thetaops[B], labelop2 = "Second y of " + thetaops[A] + " and " + thetaops[B])
-        pylab.legend()
-        pylab.show()
+            pylab.legend()
+            pylab.show()
+            pylab.clf()
     
 
 def PartD():
     tmin = 0
     tmax = 100
-    h = 0.1
+    h = 0.01
     l = 0.4
     m = 1          # NOT GIVEN
     g = 9.8
@@ -208,9 +212,10 @@ def PartD():
     theta2 = pi/4
     theta3 = pi/3
     theta4 = pi/2
+    theta5 = pi
     omega1 = 0     # NOT GIVEN
     omega2 = 0     # NOT GIVEN
-    PartDHelper(theta1, theta2, theta3, theta4, omega1, omega2, m, l, g, tmin, tmax, h)
+    PartDHelper(theta1, theta2, theta3, theta4, theta5, omega1, omega2, m, l, g, tmin, tmax, h)
     
 
 
