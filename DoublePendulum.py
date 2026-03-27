@@ -114,7 +114,7 @@ def totalEnergy(theta1s, theta2s, omega1s, omega2s, ts, m, l, g, labelop = ""):
         new_ts.append(ts[i])
     pylab.plot(new_ts, Es, label = labelop)
     pylab.xlabel("Time in seconds")
-    pylab.ylabel("Total Energy of the System in Joules")
+    pylab.ylabel("Total Energy Change of the System in Joules")
     pylab.title("Conservation of Energy")
     return Es
 
@@ -175,7 +175,7 @@ def PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l, g = 9.8):
 def PartC():
     tmin = 0
     tmax = 100
-    h = 0.01
+    h = 0.001
     l = 0.4
     m = 1          # NOT GIVEN
     theta1 = pi/2
@@ -183,6 +183,7 @@ def PartC():
     omega1 = 0     # NOT GIVEN
     omega2 = 0     # NOT GIVEN
     PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l)
+    # h = 0.001 energy loss 3 * 10^(-7)
 
 def PartDHelper(theta1, theta2, theta3, theta4, omega1, omega2, m, l, g, tmin, tmax, h):
     thetaops = []
