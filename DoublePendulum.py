@@ -1,7 +1,7 @@
 import pylab
 from math import cos, sin, pi
 from copy import copy
-from matplotlib.animation import Animation as ani
+from matplotlib.animation import FuncAnimation
 
 # Standards
 # l = l1 = l2
@@ -222,10 +222,43 @@ def PartD():
 
 
 
+def roundem(r):
+    t = []
+    for val in r:
+        t.append(int(round(val, 0)))
+    return t
+
 def animate(theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m = 1, l = 0.4, g = 9.8, tmin = 0, tmax = 100, h = 0.01):
     theta1s, theta2s, omega1s, omega2s, ts = calculate(theta1, theta2, omega1, omega2, m, l, g, tmin, tmax, h)
-    
+    ts = multi(100, ts)
+    ts = roundem(ts)
+
+    def init():
+        ax.plot([0], [0], "ko", ms = 5)
+
+    def update(frame):
+        ax.clear()
+        x1 = getX1(l, theta1s[frame])
+        y1 = getY1(l, theta1s[frame])
+        x2 = getX2(l, theta1s[frame], theta2s[frame])
+        y2 = getY2(l, theta1s[frame], theta2s[frame])
+
+        ax.plot([0, x1, x2], [0, y1, y2], "k-", lw = 2)
+        ax.plot([0], [0], "ko", lw = 5)
+        ax.plot([x1, x2], [y1, y2], "ro", ms = 10)
+        ax.set_xlim(-0.9, 0.9)
+        ax.set_ylim(-0.9, 0.6)
+        ax.axis("off")
+
+    fig, ax = pylab.subplots()
+    fig.set_facecolor("lightgray")
+    ax.set_xlim(-1, 1)
+    ax.set_ylim(-1, 0.75)
+    ax.axis("off")
+    ani = FuncAnimation(fig, update, init_func = init, frames = ts, interval = 10, blit = False, repeat = False)
+    pylab.show()
+    return ani
 
 
 if __name__ == "__main__":
-    PartD()
+    ani = animate()
