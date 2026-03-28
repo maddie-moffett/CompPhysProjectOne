@@ -228,7 +228,7 @@ def roundem(r):
         t.append(int(round(val, 0)))
     return t
 
-def animate(theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m = 1, l = 0.4, g = 9.8, tmin = 0, tmax = 100, h = 0.01):
+def animate(location2, theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m = 1, l = 0.4, g = 9.8, tmin = 0, tmax = 100, h = 0.01):
     theta1s, theta2s, omega1s, omega2s, ts = calculate(theta1, theta2, omega1, omega2, m, l, g, tmin, tmax, h)
     ts = multi(100, ts)
     ts = roundem(ts)
@@ -250,15 +250,23 @@ def animate(theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m = 1, l = 0.4
         ax.set_ylim(-0.9, 0.6)
         ax.axis("off")
 
+    location1 = "C:/Users/maddi/Desktop/CompPhys/ProjectOne/Animations/"
+
     fig, ax = pylab.subplots()
     fig.set_facecolor("lightgray")
     ax.set_xlim(-1, 1)
     ax.set_ylim(-1, 0.75)
     ax.axis("off")
     ani = FuncAnimation(fig, update, init_func = init, frames = ts, interval = 10, blit = False, repeat = False)
-    pylab.show()
+    ani.save(location1 + "ANIMATION" + location2 + ".gif")
     return ani
 
+def AniHelper(theta1, theta2, theta3, theta4, theta5):
+    location2ops = ["pio6", "pio4", "pio3", "pio2", "pi"]
+    thetas = [theta1, theta2, theta3, theta4, theta5]
+    for A in range(len(thetas)):
+        for B in range(len(thetas)):
+            animate(location2ops[A] + location2ops[B], thetas[A], thetas[B])
 
 if __name__ == "__main__":
-    ani = animate()
+    PartC()
