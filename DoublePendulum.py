@@ -247,15 +247,15 @@ def animate(location2, theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m =
         ax.plot([0], [0], "ko", lw = 5)
         ax.plot([x1, x2], [y1, y2], "ro", ms = 10)
         ax.set_xlim(-0.9, 0.9)
-        ax.set_ylim(-0.9, 0.6)
+        ax.set_ylim(-0.9, 1.5)
         ax.axis("off")
 
     location1 = "C:/Users/maddi/Desktop/CompPhys/ProjectOne/Animations/"
 
     fig, ax = pylab.subplots()
     fig.set_facecolor("lightgray")
-    ax.set_xlim(-1, 1)
-    ax.set_ylim(-1, 0.75)
+    ax.set_xlim(-0.9, 0.9)
+    ax.set_ylim(-0.9, 1.5)
     ax.axis("off")
     ani = FuncAnimation(fig, update, init_func = init, frames = ts, interval = 10, blit = False, repeat = False)
     ani.save(location1 + "ANIMATION" + location2 + ".gif")
@@ -269,4 +269,4 @@ def AniHelper(theta1, theta2, theta3, theta4, theta5):
             animate(location2ops[A] + location2ops[B], thetas[A], thetas[B])
 
 if __name__ == "__main__":
-    PartC()
+    animate("pipi", pi, pi)
