@@ -176,7 +176,7 @@ def PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l, g = 9.8):
 def PartC():
     tmin = 0
     tmax = 100
-    h = 0.001
+    h = 0.002
     l = 0.4
     m = 1          # NOT GIVEN
     theta1 = pi/2
@@ -250,7 +250,7 @@ def animate(location2, theta1 = pi/2, theta2 = pi/2, omega1 = 0, omega2 = 0, m =
         ax.set_ylim(-0.9, 1.5)
         ax.axis("off")
 
-    location1 = "C:/Users/maddi/Desktop/CompPhys/ProjectOne/Animations/"
+    location1 = "Animations/"
 
     fig, ax = pylab.subplots()
     fig.set_facecolor("lightgray")
@@ -269,4 +269,4 @@ def AniHelper(theta1, theta2, theta3, theta4, theta5):
             animate(location2ops[A] + location2ops[B], thetas[A], thetas[B])
 
 if __name__ == "__main__":
-    animate("pipi", pi, pi)
+    PartC()
