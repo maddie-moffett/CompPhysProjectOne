@@ -176,7 +176,7 @@ def PartB(tmin, tmax, h, theta1, theta2, omega1, omega2, m, l, g = 9.8):
 def PartC():
     tmin = 0
     tmax = 100
-    h = 0.002
+    h = 0.001
     l = 0.4
     m = 1          # NOT GIVEN
     theta1 = pi/2
